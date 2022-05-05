@@ -1,26 +1,32 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <hello-window v-if="this.userExist==false" :userApi="userApi" v-model:userExist="userExist" ></hello-window>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import "./reset.css";
+import HelloWindow from "./components/HelloWindow.vue";
+import userApiServer from "./components/API/UserApiServer.js";
+import FormButton from "./components/ui/FormButton.vue";
 
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+  components: { HelloWindow, FormButton },
+
+  data() {
+    return {
+      userApi: {},
+      userExist: false,
+    };
+  },
+  mounted() {
+    this.userApiCall();
+  },
+  methods: {
+    async userApiCall() {
+      this.userApi = await userApiServer;
+      console.log(this.userApi);
+    },
+  },
+};
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
+<style scoped></style>
