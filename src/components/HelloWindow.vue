@@ -7,9 +7,8 @@
         <label class="input_text label">
           Логин:
           <input
-            :value="this.userLogin || this.userApi.username"
-            :class="{ 'input-error': this.userLoginError }"
-            @input="inputLogin"
+            v-model="userLogin"
+            :class="{ 'input-error': userLoginError }"
             type="text"
             placeholder="Введите логин"
             class="input"
@@ -18,16 +17,16 @@
         <label class="input_text label">
           Пароль:
           <input
-            :value="this.userPassword || this.userApi.password"
-            :class="{ 'input-error': this.userPasswordError }"
-            @input="inputPassword"
+            v-model="userPassword"
+            :class="{ 'input-error': userPasswordError }"
             type="password"
             placeholder="Введите пароль"
             class="input"
           />
         </label>
       </form>
-      <form-button @click="loginAccount">Вход!</form-button>
+      <form-button @click="loginAccount">Вход</form-button>
+      <form-button @click="autoComlate">Помошь!</form-button>
     </div>
   </div>
 </template>
@@ -55,16 +54,11 @@ export default {
     },
   },
 
+
+
   methods: {
+
     loginAccount() {
-      if (this.userLogin == "") {
-        this.userLogin = this.userApi.username;
-      }
-
-      if (this.userPassword == "") {
-        this.userPassword = this.userApi.password;
-      }
-
       if (
         this.userLogin == this.userApi.username &&
         this.userPassword == this.userApi.password
@@ -86,14 +80,13 @@ export default {
       }
     },
 
-    inputLogin(event) {
-      this.userLogin = event.target.value;
-      // console.log(this.userLogin);
+    autoComlate(){
+      this.userLogin=this.userApi.username;
+      this.userPassword=this.userApi.password;
+      this.userLoginError = false;
+      this.userPasswordError = false;
     },
-    inputPassword(event) {
-      this.userPassword = event.target.value;
-      // console.log(this.userPassword);
-    },
+
   },
 };
 </script>
